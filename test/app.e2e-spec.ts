@@ -2,11 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { RedisModule } from '../src/redis.module';
+import { RedisClientService } from '../src/redis.client.service';
 
-describe('AppController (e2e)', () => {
+describe('RedisClientService (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [RedisModule],
     }).compile();
@@ -15,10 +16,15 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
+  describe('when application is running', () => {
+    it('should have redis client ready', () => {
+      const redisClientService: RedisClientService = app.get(RedisClientService, { strict: false });
+      expect(redisClientService.client.isOpen).toEqual(true);
+      expect(redisClientService.client.isReady).toEqual(true);
+    });
+  })
+
+  afterAll(async () => {
+    await app.close();
+  })
 });
