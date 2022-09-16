@@ -3,7 +3,7 @@ import { RedisMemoryServer } from 'redis-memory-server';
 export default async function (globalConfig, projectConfig) {
     const redisServer = new RedisMemoryServer({
         instance: {
-            port: 6379
+            port: 63790
         },
         autoStart: false
     });

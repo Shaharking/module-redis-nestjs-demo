@@ -1,0 +1,1 @@
+export const CONFIG_OPTIONS = 'REDIS_CONFIG_OPTIONS';

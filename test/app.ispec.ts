@@ -9,7 +9,13 @@ describe('RedisClientService (integration)', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [RedisModule],
+      imports: [RedisModule.register({
+        createClientConfiguration: {
+          socket: {
+            port: 63790
+          }
+        }
+      })],
     }).compile();
 
     app = moduleFixture.createNestApplication();

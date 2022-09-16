@@ -1,10 +1,21 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { RedisClientService } from './redis.client.service';
+import { Config } from './config';
+import { CONFIG_OPTIONS } from './consts'
 
-@Module({
-  imports: [],
-  controllers: [],
-  providers: [RedisClientService],
-  exports: [RedisClientService],
-})
-export class RedisModule {}
+@Module({})
+export class RedisModule {
+  static register(config: Config): DynamicModule {
+    return {
+      module: RedisModule,
+      providers: [
+        {
+          provide: CONFIG_OPTIONS,
+          useValue: config
+        },
+        RedisClientService
+      ],
+      exports: [RedisClientService],
+    };
+  }
+}

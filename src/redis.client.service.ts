@@ -1,10 +1,12 @@
-import { createClient, RedisClientType } from 'redis';
-import { Injectable, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import { createClient, RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
+import { Inject, Injectable, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import { CONFIG_OPTIONS } from './consts'
+import { Config } from './config'
 
 @Injectable()
 export class RedisClientService implements OnApplicationShutdown, OnModuleInit {
 
-  private _client: RedisClientType;
+  private _client: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
 
   public get client() {
     return this._client;
@@ -14,8 +16,8 @@ export class RedisClientService implements OnApplicationShutdown, OnModuleInit {
     this._client = value;
   }
 
-  constructor() {
-    this.client = createClient();
+  constructor(@Inject(CONFIG_OPTIONS) private readonly config: Config) {
+    this.client = createClient(config.createClientConfiguration);
   }
 
   async onModuleInit() {
