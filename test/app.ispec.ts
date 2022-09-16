@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { RedisModule } from '../src/redis.module';
 import { RedisClientService } from '../src/redis.client.service';
 
-describe('RedisClientService (e2e)', () => {
+describe('RedisClientService (integration)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
