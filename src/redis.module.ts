@@ -15,6 +15,7 @@ export class RedisModule {
         },
         RedisClientService
       ],
+      global: (config?.additionalOptions?.isGlobal || false),
       exports: [RedisClientService],
     };
   }
