@@ -1,0 +1,19 @@
+# source
+src
+test
+package-lock.json
+tsconfig.json
+tsconfig.build.json
+.prettierrc
+
+# dist
+dist/tsconfig.build.tsbuildinfo
+
+# github
+.github
+CONTRIBUTING.md
+
+# misc
+.eslintignore
+.eslintrc.js
+nest-cli.json
